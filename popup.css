@@ -1,0 +1,32 @@
+ul,
+li {
+  margin: 0;
+  padding: 0;
+}
+
+.title {
+  width: 200px;
+  font-size: 12px;
+}
+
+.card-label {
+  display: none;
+}
+
+.flag {
+  margin: 0;
+  display: flex;
+  width: 100%;
+  cursor: pointer;
+  border: 1px solid blue;
+}
+
+.figcaption {
+  display: flex;
+  align-items: center;
+}
+
+.legend {
+  margin-left: 10px;
+  font-weight: 500;
+}

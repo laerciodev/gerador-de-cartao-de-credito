@@ -1,0 +1,10 @@
+{
+  "appName": {
+    "message": "My extension",
+    "description": "The description of the extension, displayed in the web store."
+  },
+  "appDesc": {
+    "message": "This extension does something awesome.",
+    "description": "The description of the extension, displayed in the web store."
+  }
+}
