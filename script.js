@@ -182,10 +182,10 @@ function renderDataCreditCard(flag) {
     return result;
   }
 
-  const cardNumberEl = document.getElementById('card-number');
-  const cardOwnerEl = document.getElementById('card-owner');
-  const cardExpirationEl = document.getElementById('card-expiration');
-  const cardCVVEl = document.getElementById('card-cvv');
+  const cardNumberEl = document.querySelector('[data-testid="cardNumberInput"]');
+  const cardOwnerEl = document.querySelector('[data-testid="cardNameInput"]');
+  const cardExpirationEl = document.querySelector('[data-testid="expireDateInput"]');
+  const cardCVVEl = document.querySelector('[data-testid="cvvInput"]');
 
   const flags = {
     mastercard: mastercardPrefixList,
@@ -200,7 +200,11 @@ function renderDataCreditCard(flag) {
 
   const creditCardNumber = generateCreditCardNumber(flags[flag]);
   cardNumberEl.value = creditCardNumber[0];
+  cardNumberEl.dispatchEvent(new Event('input', { bubbles: true }));
   cardOwnerEl.value = 'John Doe';
+  cardOwnerEl.dispatchEvent(new Event('input', { bubbles: true }));
   cardExpirationEl.value = generateExpirationDate();
+  cardExpirationEl.dispatchEvent(new Event('input', { bubbles: true }));
   cardCVVEl.value = generateCVV();
+  cardCVVEl.dispatchEvent(new Event('input', { bubbles: true }));
 }
