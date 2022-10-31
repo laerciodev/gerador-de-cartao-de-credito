@@ -4,20 +4,57 @@ chrome.runtime.onInstalled.addListener(() => {
     title: 'Preencher dados do cartão de crédito',
   });
 
-  chrome.contextMenus.create({'id': 'mastercard', 'title': 'Mastercard', 'parentId': parent, 'contexts': ['all', 'editable']});
-  chrome.contextMenus.create({'id': 'visa', 'title': 'Visa', 'parentId': parent, 'contexts': ['all', 'editable']});
+  chrome.contextMenus.create({
+    'id': 'mastercard',
+    'title': 'Mastercard',
+    'parentId': parent,
+  });
+  chrome.contextMenus.create({
+    'id': 'visa',
+    'title': 'Visa',
+    'parentId': parent,
+  });
+  chrome.contextMenus.create({
+    'id': 'amex',
+    'title': 'Amex',
+    'parentId': parent,
+  });
+  chrome.contextMenus.create({
+    'id': 'diners',
+    'title': 'Diners',
+    'parentId': parent,
+  });
+  chrome.contextMenus.create({
+    'id': 'discover',
+    'title': 'Discover',
+    'parentId': parent,
+  });
+  chrome.contextMenus.create({
+    'id': 'jcb',
+    'title': 'JCB',
+    'parentId': parent,
+  });
+  chrome.contextMenus.create({
+    'id': 'enroute',
+    'title': 'EnRoute',
+    'parentId': parent,
+  });
+  chrome.contextMenus.create({
+    'id': 'voyager',
+    'title': 'Voyager',
+    'parentId': parent,
+  });
 });
 
-chrome.contextMenus.onClicked.addListener((info, tab) => {
-  // if (info.menuItemId === 'fill-credit-card') {
-  //   chrome.scripting.executeScript({
-  //     target: { tabId: tab.id },
-  //     function: renderDataCreditCard,
-  //   }); 
-  // }
+chrome.contextMenus.onClicked.addListener((info, tabs) => {
+  chrome.scripting.executeScript({
+    target: { tabId: tabs.id },
+    function: renderDataCreditCard,
+    args: [info.menuItemId],
+  });
 });
 
-function renderDataCreditCard() {
+function renderDataCreditCard(flag) {
   const amexPrefixList = [
     "34",
     "37"
@@ -135,7 +172,7 @@ function renderDataCreditCard() {
     return ccstr;
   }
   
-  function generateCreditCardNumber(prefixList, length = 16, howMany = 1) {
+  function generateCreditCardNumber(prefixList = mastercardPrefixList, length = 16, howMany = 1) {
     const result = [];
     for (let i = 0; i < howMany; i++) {
         const randomArrayIndex = Math.floor(Math.random() * prefixList.length);
@@ -150,7 +187,18 @@ function renderDataCreditCard() {
   const cardExpirationEl = document.getElementById('card-expiration');
   const cardCVVEl = document.getElementById('card-cvv');
 
-  const creditCardNumber = generateCreditCardNumber(visaPrefixList);
+  const flags = {
+    mastercard: mastercardPrefixList,
+    visa: visaPrefixList,
+    amex: amexPrefixList,
+    diners: dinersPrefixList,
+    discover: discoverPrefixList,
+    jcb: jcbPrefixList,
+    enroute: enRoutePrefixList,
+    voyager: voyagerPrefixList,
+  };
+
+  const creditCardNumber = generateCreditCardNumber(flags[flag]);
   cardNumberEl.value = creditCardNumber[0];
   cardOwnerEl.value = 'John Doe';
   cardExpirationEl.value = generateExpirationDate();
